@@ -17,3 +17,7 @@ $('#carson').carson();
 *   use_random_complexity: **Boolean** if you want the complexity level to be randomized.
 *   text: **String** a string of text to use &mdash; you'll likely want to override this.
 *   textures: **Array** of your texture filenames (relative filepath is required &mdash; e.g: img1.jpg, img2.jpg).
+
+
+
+### [DEMO](http://dxdstudio.com/labs/carsonjs/ "CarsonJS")
