@@ -1,11 +1,9 @@
 ## A jQuery+canvas plugin for making random David Carson inspired art!
 
 **How to use:**
-
-  	`
-			// Call the plugin on document.ready on a given canvas id:
-			$('#carson').carson();
-		`
+`// Call the plugin on document.ready on a given canvas id:
+$('#carson').carson();
+`
 
 ### Override the Options:
 
