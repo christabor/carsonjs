@@ -57,7 +57,7 @@
 		function makeDoubleLetterOverlay(font, letter, x, y) {
 			context.font = font;
 			context.fillText(letter, x, y);
-			context.font = "110pt Georgia, serif";
+			context.font = font;
 			context.fillText(letter, x+10, y+10);
 		}
 
