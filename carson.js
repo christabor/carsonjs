@@ -1,3 +1,12 @@
+/*!
+ * carsonJS - A jQuery+canvas plugin for making random David Carson inspired art!
+ * (c) 2013 Chris Tabor <dxdstudio@gmail.com>
+ * Apache 2.0 Licensed.
+ * <3
+ * http://dxdstudio.com/labs/carsonjs
+ * http://github.com/christabor/carsonjs
+ */
+
 (function($){
 	$.fn.carson = function(options) {
 		var filler = {
