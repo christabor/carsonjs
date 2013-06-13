@@ -21,3 +21,8 @@ $('#carson').carson();
 
 
 ### [DEMO](http://dxdstudio.com/labs/carsonjs/ "CarsonJS")
+
+
+## Dependencies:
+
+* jQuery 1.7 (can quickly be removed though)
