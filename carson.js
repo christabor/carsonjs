@@ -8,16 +8,17 @@
  */
 
  (function($){
+    'use strict';
     $.fn.carson = function(options) {
         var filler = {
             generic: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, blanditiis ut iure nobis minus dolor! Harum, dolorum odit excepturi aspernatur itaque illo reiciendis nam quo voluptatibus sapiente iusto recusandae deleniti?',
             dc_quote1: 'It\'s not about knowing all the gimmicks and photo tricks. If you haven\'t got the eye, no program will give it to you.',
             dc_quote2: 'Graphic design will save the world right after rock and roll does.',
             dc_quote3: 'Don\'t confuse legibility with communication. Just because something is legible doesn\'t mean it communicates and, more importantly, doesn\'t mean it communicates the right thing.'
-        },
-        canvas = $(this),
-        context,
-        defaults = {
+        };
+        var canvas = $(this);
+        var context = null;
+        var defaults = {
             fonts: ['Bodoni MT', 'Calibri', 'Cambria', 'Didot', 'Hoefler Text', 'Lucida Sans', 'Andale Mono', 'Lato', 'Bookman Old Style', 'Open Sans', 'Gentium', 'Georgia', 'Helvetica', 'Verdana', 'Century Gothic', 'Arial', 'Times New Roman', 'Monaco'],
             width: 800,
             height: 600,
@@ -29,34 +30,34 @@
             use_system_fonts: true,
             text: filler.dc_quote2,
             textures:[]
-        },
-        opts = $.extend(defaults, options);
+        };
+        var opts = $.extend(defaults, options);
 
-        // init canvas  
+        // init canvas
         canvas = document.getElementById('carson');
         canvas.setAttribute('width', opts.width);
         canvas.setAttribute('height', opts.height);
         // check for canvas support
         if(!canvas.getContext('2d') || !(context = canvas.getContext('2d'))) {
-            return;
+            throw new Error('Cannot render without a canvas.');
         }
         // set context
         context = canvas.getContext('2d');
 
         function rando(max, rounded) {
             if(rounded) {
-                return Math.random()*max>>0;
+                return Math.random() * max >> 0;
             } else {
                 return Math.random() * max;
             }
         }
 
         function makeRandomGradient() {
-            var grd = context.createLinearGradient(0, 0, canvas.width, canvas.height),
-            opacity1 = rando(1, true),
-            opacity2 = rando(2, true);
-            var c1 = 'rgba(' + rando(255, true)+','+rando(255, true)+','+rando(255, true)+','+opacity1 + ')',
-            c2 = 'rgba(' + rando(255, true)+','+rando(255, true)+','+rando(255, true)+','+opacity2 + ')';
+            var grd = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+            var opacity1 = rando(1, true);
+            var opacity2 = rando(2, true);
+            var c1 = 'rgba(' + rando(255, true) + ',' + rando(255, true) + ',' + rando(255, true) + ',' + opacity1 + ')';
+            var c2 = 'rgba(' + rando(255, true) + ',' + rando(255, true) + ',' + rando(255, true) + ',' + opacity2 + ')';
             grd.addColorStop(0, c1);
             grd.addColorStop(1, c2);
             context.fillStyle = grd;
@@ -67,7 +68,7 @@
             context.font = font;
             context.fillText(letter, x, y);
             context.font = font;
-            context.fillText(letter, x+10, y+10);
+            context.fillText(letter, x + 10, y + 10);
         }
 
         function makeImage() {
@@ -83,7 +84,7 @@
             img.src = src;
             img.onload = function() {
                 var rand = rando(opts.height, true);
-                context.drawImage(img, rand, rand, rand/rando(4, true), rand/rando(4, true));
+                context.drawImage(img, rand, rand, rand / rando(4, true), rand / rando(4, true));
             };
         }
 
@@ -95,15 +96,15 @@
 
         function addRandomPunctation(font) {
             var chars = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '[', ']', '{', '}', ';', '"', '?', '<', '>', '~', '\\', '|', '/'];
-            context.font = rando(200, true)+"pt "+font;
+            context.font = rando(200, true) + 'pt ' + font;
             context.fillText(chars[rando(chars.length, true)], rando(opts.width), rando(opts.height));
             context.rotate((Math.PI) * 120);
         }
 
         function makeWordClump(sentence) {
-            var clump = sentence.split(" ").length/2,
+            var clump = sentence.split(' ').length / 2,
             font = opts.fonts[rando(opts.fonts.length, true)];
-            context.font = rando(20, true)+"pt "+font;
+            context.font = rando(20, true) + 'pt ' + font;
             for(var i = 0; i <= clump; i++) {
                 // randomize alignment with text blocks
                 var align = rando(4, true);
@@ -117,7 +118,7 @@
                     context.textAlign = 'justify';
                 }
                 context.fillStyle = '#444';
-                context.fillText(sentence, rando(40*i, true), rando(40*i, true));
+                context.fillText(sentence, rando(40 * i, true), rando(40 * i, true));
                 context.fill();
             }
         }
@@ -130,7 +131,7 @@
                 var w = rando(2, true),
                 direction = rando(1, true);
                 if(direction < 0.5) {
-                    context.rect((opts.width/8)*(i*2), (opts.width)/rando(opts.width/2, true), w, y);
+                    context.rect((opts.width / 8) * (i * 2), (opts.width) / rando(opts.width / 2, true), w, y);
                 } else {
                     context.rect(10*i*2, rando(opts.width/2, true), w, y);
                 }
@@ -169,7 +170,7 @@
                         makeSteppedComposition(5, false);
                     }
                 }
-                var full_font = rando(200, true)+"pt "+font;
+                var full_font = rando(200, true) + 'pt ' + font;
                 makeDoubleLetterOverlay(full_font, word, rando(opts.width), rando(opts.width));
                 context.font = full_font;
                 context.fillText(word, rando(opts.width), rando(opts.height));
@@ -198,18 +199,18 @@
 
         // compose based on complexity
         if(opts.complexity === 1) {
-            makeWordComposition(opts.text.split(" "), true);
-        } else if(opts.complexity == 2) {
-            makeWordComposition(opts.text.split(" "), true);
+            makeWordComposition(opts.text.split(' '), true);
+        } else if(opts.complexity === 2) {
+            makeWordComposition(opts.text.split(' '), true);
             makeWordClump(opts.text);
-        } else if(opts.complexity == 3) {
+        } else if(opts.complexity === 3) {
             makeWordComposition(opts.text, true);
-            makeWordComposition(opts.text.split(" "), true);
+            makeWordComposition(opts.text.split(' '), true);
             makeWordClump(opts.text);
 
-        } else if(opts.complexity == 4) {
+        } else if(opts.complexity === 4) {
             makeWordComposition(opts.text, true);
-            makeWordComposition(opts.text.split(" "), true);
+            makeWordComposition(opts.text.split(' '), true);
             makeWordClump(opts.text);
         }
         return;
