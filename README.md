@@ -6,7 +6,8 @@ $('#carson').carson();
 `
 
 ### Override the Options:
-
+*   delay **Boolean** - toggles delay.
+*   delay_amount **Number** - the time (in milliseconds) for delay initializes
 *   fonts: **Array** of your fonts.
 *   width: **Number** for width of canvas.
 *   height: **Number** for height of canvas.
