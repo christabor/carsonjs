@@ -19,7 +19,14 @@
         var canvas = $(this);
         var context = null;
         var defaults = {
-            fonts: ['Bodoni MT', 'Calibri', 'Cambria', 'Didot', 'Hoefler Text', 'Lucida Sans', 'Andale Mono', 'Lato', 'Bookman Old Style', 'Open Sans', 'Gentium', 'Georgia', 'Helvetica', 'Verdana', 'Century Gothic', 'Arial', 'Times New Roman', 'Monaco'],
+            delay: false,
+            delay_amount: 0,
+            fonts: [
+                'Bodoni MT', 'Calibri', 'Cambria', 'Didot', 'Hoefler Text',
+                'Lucida Sans', 'Andale Mono', 'Lato', 'Bookman Old Style',
+                'Open Sans', 'Gentium', 'Georgia', 'Helvetica', 'Verdana',
+                'Century Gothic', 'Arial', 'Times New Roman', 'Monaco'
+            ],
             width: 800,
             height: 600,
             use_colors: true,
@@ -29,7 +36,7 @@
             use_random_complexity: true,
             use_system_fonts: true,
             text: filler.dc_quote2,
-            textures:[]
+            textures: []
         };
         var opts = $.extend(defaults, options);
 
@@ -37,10 +44,12 @@
         canvas = document.getElementById('carson');
         canvas.setAttribute('width', opts.width);
         canvas.setAttribute('height', opts.height);
+
         // check for canvas support
         if(!canvas.getContext('2d') || !(context = canvas.getContext('2d'))) {
             throw new Error('Cannot render without a canvas.');
         }
+
         // set context
         context = canvas.getContext('2d');
 
@@ -197,22 +206,29 @@
             opts.complexity = rando(4, true);
         }
 
-        // compose based on complexity
-        if(opts.complexity === 1) {
-            makeWordComposition(opts.text.split(' '), true);
-        } else if(opts.complexity === 2) {
-            makeWordComposition(opts.text.split(' '), true);
-            makeWordClump(opts.text);
-        } else if(opts.complexity === 3) {
-            makeWordComposition(opts.text, true);
-            makeWordComposition(opts.text.split(' '), true);
-            makeWordClump(opts.text);
+        var finalFunc = function() {
+            var text = opts.text.split(' ');
+            // compose based on complexity
+            if(opts.complexity === 1) {
+                makeWordComposition(text, true);
+            } else if(opts.complexity === 2) {
+                makeWordComposition(text, true);
+                makeWordClump(opts.text);
+            } else if(opts.complexity === 3) {
+                makeWordComposition(opts.text, true);
+                makeWordComposition(text, true);
+                makeWordClump(opts.text);
+            } else if(opts.complexity === 4) {
+                makeWordComposition(opts.text, true);
+                makeWordComposition(text, true);
+                makeWordClump(opts.text);
+            }
+        };
 
-        } else if(opts.complexity === 4) {
-            makeWordComposition(opts.text, true);
-            makeWordComposition(opts.text.split(' '), true);
-            makeWordClump(opts.text);
+        if(opts.delay) {
+            setTimeout(finalFunc, opts.delay_amount);
+        } else {
+            finalFunc();
         }
-        return;
     };
 })(jQuery);
