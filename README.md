@@ -1,3 +1,5 @@
+[![MIT Badge](http://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/christabor/carsonjs/master/LICENSE)
+
 ## A jQuery+canvas plugin for making random David Carson inspired art!
 
 **How to use:**
